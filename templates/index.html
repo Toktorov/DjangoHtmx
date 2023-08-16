@@ -15,23 +15,45 @@
 
     <!-- Start Check -->
     <div class="card text-center">
-    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-        <div class="row">
-            <h1>Tolom KG</h1>
-            <form method="post">
-            <div class="mb-3 row">
-                <label for="exampleInputEmail1" class="form-label">Гос номер авто</label>
-                
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                
+        <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+            <div class="row">
+                <h1>Tolom KG</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3 row">
+                        <label for="exampleInputEmail1" class="form-label">Гос номер авто</label>
+                        <input type="text" name="license_plate" class="form-control">
+                    </div>
+                    <div class="col-auto">
+                        <button hx-post="{% url 'index' %}" hx-trigger="click" hx-target="#response" hx-vals="formData" hx-append="true" type="submit" class="btn btn-primary mb-3">Проверить</button>
+                    </div>
+                </form>
+                <div id="response">
+                    {% if car %}
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                {{ car.license_plate }}
+                            </div>
+                            <div class="card-body">
+                              <h5 class="card-title">Результаты поиска</h5>
+                              <p class="card-text">{{ car.license_plate }}</p>
+                              <p class="card-text">{{ car.brand }}</p>
+                              <p class="card-text">{{ car.model }}</p>
+                              <p class="card-text">{{ car.steering_wheel }}</p>
+                              <p class="card-text">{{ car.year }}</p>
+                              <p class="card-text">{{ car.color }}</p>
+                              <p class="card-text">{{ car.volume }}</p>
+                              <a href="{% url 'index' %}" hx-get="{% url 'index' %}" class="btn btn-primary">Домой</a>
+                            </div>
+                          </div>
+                          
+                   
+                    {% endif %}
                 </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-primary mb-3">Проверить</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
-</div>
     <!-- End Check -->
 
 </body>
